@@ -1,0 +1,48 @@
+Sub test()
+
+    Dim n_row_i As Integer
+    Dim n_row_o As Integer
+    Dim n_cid_i As Integer
+    Dim n_cid_o As Integer
+    Dim i As Integer
+    
+    Dim A_i As Variant
+    Dim A_o As Variant
+    
+    Dim row_i As Range
+    Dim row_o As Range
+    Dim lable As Range
+    Dim output As Worksheet
+    
+    n_row_i = 1
+    Set row_i = Range("A1")
+    
+    Do While row_i.Value <> "CID"
+        Set row_i = row_i.Offset(1, 0)
+        n_row_i = n_row_i + 1
+    Loop
+    
+    n_row_o = 1
+    Set row_o = Worksheets("Sheet2").Range("A1")
+    Do While row_o.Value <> "CID"
+        Set row_o = row_o.Offset(1, 0)
+        n_row_o = n_row_o + 1
+    Loop
+
+    Set output = Worksheets("Sheet2")
+    
+    A_i = Array("F", "H", "J", "L", "N")
+    A_o = Array("B", "C", "D", "E", "F")
+    For i = 0 To 4
+        n_cid_i = n_row_i + 1
+        n_cid_o = n_row_o + 1
+        Set lable = Worksheets("Sheet1").Range("B" & n_cid_i)
+        Do While lable.Value <> ""
+            output.Range(A_o(i) & n_cid_o).Formula = "=Sheet1!B" & n_cid_i & "&Sheet1!" & A_i(i) & n_cid_i
+            Set lable = lable.Offset(1, 0)
+            n_cid_i = n_cid_i + 1
+            n_cid_o = n_cid_o + 1
+        Loop
+    Next i
+    
+End Sub
